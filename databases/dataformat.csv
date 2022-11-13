@@ -1,0 +1,11 @@
+Notes,,
+Date,Date added to the database,
+Channel Name,Channel's Name,
+Youtube Link,YouTube Channel URL,
+Subscribers,Total number of subscribers,Need to standardise numerical format
+Average views,Average based on 5 most recently uploaded videos,
+Email,Business contact email,
+Genre,Primary type of content,"E.g. gaming, technology, social experiment etc. How granular do we need this to be? Do we need to distinguish between types of gaming content or should it stay higher level"
+T1 Audience (%),"Total percentage of audience that is from the US, UK, CA or AU",
+Age <18 (%),Total percentage of audience that is less than 18 years old,
+Age > 25,Total percentage of audience that is less than 25 years old and above,Are there any other age breakdowns that are useful? E.g. 18-25 - what specific markets do potential clients look at?
