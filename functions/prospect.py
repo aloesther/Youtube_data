@@ -1,20 +1,4 @@
-import pandas as pd;
-import pymongo as pm;
-
-
-EXCEL_DB='../databases/prospects.csv';
-
-
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-	pass
-
-
-
-def migrateMongoDB2CSV():
-	pass
-
-
+from .utils import *;
 
 
 class ProspectHandler():
@@ -36,44 +20,52 @@ class ProspectHandler():
 
 
 
-	def save(self):
-		pass
+	def save(self, prospectdt):
+		return db['prospects'].save(prospectdt);
 
 
 
-	def read(self):
-		pass
+	def read(self, _cond):
+		return db['prospects'].get(_cond);
 
 
 
-	def get(self):
-		return self.read();
+	def get(self, _cond):
+		return self.read(_cond);
 
 
 
 	def list(self):
-		return self.read();
+		return self.read(_cond);
 
 
 
-	def update(self):
-		pass
+	def edit(self, _cond, prospectdt):
+		return self.update(_cond, prospectdt);
 
 
 
-	def edit(self):
-		return self.update();
-
-
-
-	def delete(self):
-		pass
+	def update(self, _cond, prospectdt):
+		return db['prospects'].update(_cond, prospectdt);
 
 
 
 
-	def load(self):
-		pass
+	def delete(self, _cond):
+		return db['prospects'].delete(_cond);
+
+
+
+
+	def load(self, _cond):
+		def transform(youtubedt):
+			pass
+		return db['masterlists'].save(transform(prospectdt));
+
+
+
+	def export(self, _cond):
+		return migrateMongoDB2CSV(_cond);
 
 
 

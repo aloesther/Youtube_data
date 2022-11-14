@@ -1,18 +1,9 @@
-import pandas as pd;
-import pymongo as pm;
-
-
-EXCEL_DB='../databases/youtubes.csv';
+from .utils import *;
+from pyyoutube import Api
 
 
 
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-
-
-
-def migrateMongoDB2CSV():
-	pass
+ytapi = Api(api_key="your api key")
 
 
 
@@ -32,57 +23,67 @@ class YouTubeHandler():
 
 
 	def create(self):
-		pass
+		return self.save();
 
 
 
-	def save(self):
-		pass
+	def save(self, youtubedt):
+		return db['youtubes'].save(youtubedt);
 
 
 
-	def read(self):
-		pass
+	def read(self, _cond):
+		return db['youtubes'].get(_cond if _cond else None);
 
 
 
-	def get(self):
-		return self.read();
+	def get(self, _cond):
+		return self.read(_cond);
 
 
 
-	def list(self):
-		return self.read();
+	def list(self, _cond):
+		return self.read(_cond);
 
 
 
-	def update(self):
-		pass
+	def update(self, _cond, youtubedt):
+		return db['youtubes'].update(_cond, youtubedt);
 
 
 
-	def edit(self):
-		return self.update();
+	def edit(self, _cond, youtubedt):
+		return self.update(_cond, youtubedt);
 
 
 
-	def delete(self):
-		pass
+	def delete(self, _cond):
+		return db['youtubes'].remove(_cond);
 
 
 
-	def extract(self):
-		pass
+	def export(self, _cond):
+		return migrateMongoDB2CSV('youtubes', _cond);
 
 
 
-	def transform(self):
-		pass
+	def extract(self, _cond):
+		youtubedt = ytapi.search(_cond);
+		return db['youtubes'].save(youtubedt);
 
 
 
-	def load(self):
-		pass
+	def transform(self, _cond, youtubedt):
+		def f():
+			pass
+		def g():
+			pass
+		return g(f(youtubedt));
+
+
+
+	def load(self, prospectdt):
+		return db['prospects'].save(prospectdt);
 
 
 

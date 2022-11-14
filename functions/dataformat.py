@@ -1,22 +1,7 @@
-import pandas as pd;
-import pymongo as pm;
+from .utils import *;
 
 
-EXCEL_DB='../databases/dataformats.csv';
-
-
-
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-
-
-
-def migrateMongoDB2CSV():
-	pass
-
-
-
-class DataFormatHandler():
+class MasterlistHandler():
 
 
 
@@ -35,37 +20,41 @@ class DataFormatHandler():
 
 
 
-	def save(self):
-		pass
+	def save(self, dataformatdt):
+		return db['dataformats'].save(dataformatdt);
 
 
 
-	def read(self):
-		pass
+	def read(self, _cond):
+		return db['dataformats'].list(_cond);
 
 
 
-	def get(self):
-		return self.read();
+	def get(self, _cond):
+		return self.read(_cond);
 
 
 
-	def list(self):
-		return self.read();
+	def list(self, _cond):
+		return self.read(_cond);
 
 
 
-	def update(self):
-		pass
+	def update(self, _cond, dataformatdt):
+		return db['dataformats'].update(_cond, dataformatdt)
 
 
 
-	def edit(self):
-		return self.update();
+	def edit(self, _cond, dataformatdt):
+		return self.update(_cond, dataformatdt);
 
 
 
-	def delete(self):
-		pass
+	def delete(self, _cond):
+		return db['dataformats'].remove(_cond);
+
+
+	def export(self, _cond):
+		return migrateMongoDB2CSV('dataformats', _cond);
 
 

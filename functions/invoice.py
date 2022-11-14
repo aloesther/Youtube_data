@@ -1,17 +1,6 @@
-import pandas as pd;
-import pymongo as pm;
+from .utils import *;
 
 
-EXCEL_DB='../databases/invoices.csv';
-
-
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-
-
-
-def migrateMongoDB2CSV():
-	pass
 
 
 
@@ -34,42 +23,50 @@ class InvoiceHandler():
 
 
 
-	def save(self):
-		pass
+	def save(self, invoicedt):
+		return db['invoices'].save(invoicedt);
 
 
 
-	def read(self):
-		pass
+	def read(self, _cond):
+		return db['invoices'].list(_cond);
 
 
 
-	def get(self):
-		return self.read();
+	def get(self, _cond):
+		return self.read(_cond);
 
 
 
-	def list(self):
-		return self.read();
+	def list(self, _cond):
+		return self.read(_cond);
 
 
 
-	def update(self):
-		pass
+	def update(self, _cond, invoicedt):
+		return db['invoices'].update(_cond, invoicedt)
 
 
 
-	def edit(self):
-		return self.update();
+	def edit(self, _cond, invoicedt):
+		return self.update(_cond, invoicedt);
 
 
 
-	def delete(self):
-		pass
+	def delete(self, _cond):
+		return db['invoices'].remove(_cond);
+
+
+	def export(self, _cond):
+		return migrateMongoDB2CSV('invoices', _cond);
 
 
 
 	def forwardToPayment(self):
 		pass
 
+
+
+	def confirmPayment(self):
+		pass
 

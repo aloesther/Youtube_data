@@ -1,17 +1,5 @@
-import pandas as pd;
-import pymongo as pm;
+from .utils import *;
 
-
-EXCEL_DB='../databases/deals.csv';
-
-
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-
-
-
-def migrateMongoDB2CSV():
-	pass
 
 
 
@@ -34,57 +22,67 @@ class DealHandler():
 
 
 
-	def save(self):
-		pass
+	def save(self, dealdt):
+		return db['deals'].save(dealdt);
 
 
 
-	def read(self):
-		pass
+	def read(self, _cond):
+		return db['deals'].list(_cond);
 
 
 
-	def get(self):
-		return self.read();
+	def get(self, _cond):
+		return self.read(_cond);
 
 
 
-	def list(self):
-		return self.read();
+	def list(self, _cond):
+		return self.read(_cond);
 
 
 
-	def update(self):
-		pass
+	def update(self, _cond, dealdt):
+		return db['deals'].update(_cond, dealdt)
 
 
 
-	def edit(self):
-		return self.update();
+	def edit(self, _cond, dealdt):
+		return self.update(_cond, dealdt);
 
 
 
-	def delete(self):
-		pass
+	def delete(self, _cond):
+		return db['deals'].remove(_cond);
+
+
+	def export(self, _cond):
+		return migrateMongoDB2CSV('deals', _cond);
 
 
 
-	def getClient(self):
-		pass
+	def getClient(self, _cond):
+		return self.read(_cond);
 
 
 
 	def getTalent(self):
-		pass
+		return self.read(_cond);
 
 
 
-	def sendDeal(self):
-		pass
+	def sendDeal(self, _cond):
+		mailer = SMTPMailer()
+		messages = []
+		email_msg = EmailMessage(messages, _cond.frm, _cond.to)
+		messages.append(email_msg)
+		response=mailer.send_messages(*messages)
+		db['deals'].update(_cond, messages);
+		return response;
 
 
-	def confirmDeal(self):
-		pass
+	def confirmDeal(self, _cond):
+		return self.update(_cond, {'confirm':1});
 
 
 

@@ -1,18 +1,5 @@
-import pandas as pd;
-import pymongo as pm;
+from .utils import *;
 
-
-EXCEL_DB='../databases/negotiations.csv';
-
-
-
-def migrateCSV2MongoDB():
-	df = pd.read_csv(EXCEL_DB);
-
-
-
-def migrateMongoDB2CSV():
-	pass
 
 
 
@@ -35,48 +22,65 @@ class NegotiationHandler():
 
 
 
-	def save(self):
+	def save(self, negotiationdt):
+		return db['negotiations'].save(negotiationdt);
+
+
+
+	def read(self, _cond):
+		return db['negotiations'].list(_cond);
+
+
+
+	def get(self, _cond):
+		return self.read(_cond);
+
+
+
+	def list(self, _cond):
+		return self.read(_cond);
+
+
+
+	def update(self, _cond, negotiationdt):
+		return db['negotiations'].update(_cond, negotiationdt)
+
+
+
+	def edit(self, _cond, negotiationdt):
+		return self.update(_cond, negotiationdt);
+
+
+
+	def delete(self, _cond):
+		return db['negotiations'].remove(_cond);
+
+
+	def export(self, _cond):
+		return migrateMongoDB2CSV('negotiations', _cond);
+
+
+
+	def monitor(self, _cond):
+		# This is a monitoring service function/app
 		pass
 
 
 
-	def read(self):
-		pass
+	def generateResponse(self, _cond):
+		gen = pipeline();
+		return gen(_cond);
 
 
 
-	def get(self):
-		return self.read();
-
-
-
-	def list(self):
-		return self.read();
-
-
-
-	def update(self):
-		pass
-
-
-
-	def edit(self):
-		return self.update();
-
-
-
-	def delete(self):
-		pass
-
-
-
-	def monitor(self):
-		pass
-
-
-
-	def respond(self):
-		pass
+	def respond(self, _cond, messages):
+		mailer = SMTPMailer()
+		messages = []
+		email_msg = EmailMessage(messages, _cond.frm, _cond.to)
+		messages.append(email_msg)
+		response=mailer.send_messages(*messages)
+		db['negotiations'].update(_cond, messages);
+		return response;
 
 
 
