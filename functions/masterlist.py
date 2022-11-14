@@ -1,3 +1,20 @@
+import pandas as pd;
+import pymongo as pm;
+
+
+EXCEL_DB='../databases/masterlists.csv';
+
+
+def migrateCSV2MongoDB():
+	df = pd.read_csv(EXCEL_DB);
+
+
+
+def migrateMongoDB2CSV():
+	pass
+
+
+
 class MasterlistHandler():
 
 

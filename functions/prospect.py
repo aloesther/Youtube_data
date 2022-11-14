@@ -1,3 +1,22 @@
+import pandas as pd;
+import pymongo as pm;
+
+
+EXCEL_DB='../databases/prospects.csv';
+
+
+def migrateCSV2MongoDB():
+	df = pd.read_csv(EXCEL_DB);
+	pass
+
+
+
+def migrateMongoDB2CSV():
+	pass
+
+
+
+
 class ProspectHandler():
 
 
