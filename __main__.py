@@ -1,4 +1,4 @@
-from .apis import youtube;
+from apis import youtube;
 from flask import Flask;
 app = Flask(__name__);
 

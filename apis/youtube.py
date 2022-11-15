@@ -1,5 +1,5 @@
 from flask import jsonify, request;
-from ..functions import youtube;
+from functions import youtube;
 yt = youtube.YouTubeHandler();
 
 
