@@ -1,4 +1,4 @@
-#from .utils import *;
+from utils import *;
 import googleapiclient.discovery
 
 # API information
@@ -19,12 +19,12 @@ def create(self):
 
 
 def save(self, youtubedt):
-	return db['youtubes'].save(youtubedt);
+	return db['youtubes'].insert_many(youtubedt);
 
 
 
 def read(self, _cond):
-	return db['youtubes'].get(_cond if _cond else None);
+	return db['youtubes'].find(_cond if _cond else {});
 
 
 
@@ -53,7 +53,12 @@ def delete(self, _cond):
 
 
 
-def export(self, _cond):
+def importD(self, _cond):
+	return migrateCSVMongoDB('youtubes', _cond);
+
+
+
+def exportD(self, _cond):
 	return migrateMongoDB2CSV('youtubes', _cond);
 
 
@@ -70,7 +75,7 @@ def extract(self, _cond):
 	"""
 	request = youtube.search(**_cond).list(part='snippet');
 	response = request.execute()
-	#db['youtubes'].save(response);
+	db['youtubes'].insert_many(response);
 	return response
 
 
@@ -90,7 +95,7 @@ def transform(self, _cond, youtubedt):
 
 def load(self, prospectdt):
 	""" Save this in the prospect database"""
-	return db['prospects'].save(prospectdt);
+	return db['prospects'].insert_many(prospectdt);
 
 
 

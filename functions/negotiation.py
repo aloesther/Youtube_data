@@ -1,4 +1,4 @@
-#from .utils import *;
+from utils import *;
 import googleapiclient.discovery
 
 # API information
@@ -68,9 +68,12 @@ def delete(self, _cond):
 	return db['negotiations'].remove(_cond);
 
 
-def export(self, _cond):
+def exportD(self, _cond):
 	return migrateMongoDB2CSV('negotiations', _cond);
 
+
+def importD(self, _cond):
+	return migrateCSVMongoDB('negotiations', _cond);
 
 
 def monitor(self, _cond):
