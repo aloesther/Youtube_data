@@ -1,7 +1,7 @@
 import pandas as pd;
 import pymongo as pm;
 from mailshake import SMTPMailer, EmailMessage;
-from transformers import pipeline
+#from transformers import pipeline
 
 
 
@@ -18,14 +18,17 @@ def getDBDIR(name):
 def migrateCSV2MongoDB(name, _cond):
 	df = pd.read_csv(getDBDIR(name));
 	json = df.to_json();
-	db[name].save(json);
+	db[name].insert_many(json);
 	return json;
 
 
 
 def migrateMongoDB2CSV(name, _cond):
-	data=db[name].get({}).to_array();
+	data=db[name].find({}).cursor();
 	csv = pd.read_json(data).to_csv();
+	f = open(getDBDIR(name), "a")
+	f.write(csv);
+	f.close()
 	return csv;
 
 
